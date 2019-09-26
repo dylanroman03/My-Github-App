@@ -1,21 +1,36 @@
 import { ajaxGet } from './ajax.js';
-const { cient_id, client_secret } = require('/config.json');
+const { client_id, client_secret } = require('./config.json');
+const UiProfile = require('./ui-user-profile.js');
+
+const ui = new UiProfile();	 
  
 var exploreFormElt = document.getElementById("exploreForm");
 var exploreInputElt = document.getElementById("exploreInput");
 
-exploreFormElt.addEventListener("submit", function (e) {
+exploreFormElt.addEventListener("submit", (e) => {
 	'use strict';
-    e.preventDefault();
-	var nameUser = exploreInputElt.value;
-	var url = "https://api.github.com/users/" + nameUser
-	ajaxGet(url,function(reply){
-		var user = JSON.parse(reply);
-		viewInformation(user);
-		console.log(user);
-	});
+    	e.preventDefault();
+	const nameUser = exploreInputElt.value;
+	
+	if(nameUser !== "") {
+		var url = `https://api.github.com/users/` + nameUser + `?client_id=${client_id}&client_secret=${client_secret}` 
+		ajaxGet(url, (user) => {
+			ui.viewProfile(user)
+			console.log(user);
+		});
+	}else {
+		console.error("User not avalible");
+	}
 });
 
+
+
+
+
+
+
+
+/*
 //Function View Information para mostrar informacion
 function viewInformation(user){
 	var divInformationElt = document.getElementById("information");
@@ -141,7 +156,7 @@ function styleLanguage(e){
 }
 
 
-
+*/
 
 
 

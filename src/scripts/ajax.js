@@ -3,7 +3,9 @@ export function ajaxGet(url, callback){
 	req.open("GET", url, true);
 	req.addEventListener("load", function(){
 		if(req.status >= 200 && req.status < 400){
-			callback(req.responseText);
+			var reply = JSON.parse(req.responseText);
+			//return reply;
+			callback(reply)	
 		}else {
 			//Error de Servidor
 			document.write(req.status + " " + req.statusText)
