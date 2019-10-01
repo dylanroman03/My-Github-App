@@ -3,13 +3,16 @@
 <head>
 	<meta charset="UTF-8">
 	<title>My Github App</title>
-	<link href="style.css" rel="stylesheet">	
+	<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+	<!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
 </head>
 <body>
-	<form id="exploreForm">
-		<input type="search" id="exploreInput" placeholder="Search" autofocus></input>
-		<input type="submit" id="exploreSubmit"></input>
-	</form>
-	<div id="information"></div>
+	<div class="container">
+		<form id="exploreForm">
+			<input type="search" id="exploreInput" placeholder="Search" class="form-control" autofocus></input>
+			<input type="submit" id="exploreSubmit" class="btn btn-dark"></input>
+		</form>
+		<div id="information"></div>
+	</div>
 </body>
 </html>

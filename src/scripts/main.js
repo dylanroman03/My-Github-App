@@ -1,4 +1,5 @@
 import { ajaxGet } from './ajax.js';
+import 'bootstrap';
 const { client_id, client_secret } = require('./config.json');
 const UiProfile = require('./ui-user-profile.js');
 
