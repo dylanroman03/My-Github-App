@@ -1,5 +1,7 @@
 import { ajaxGet } from './ajax.js';
+import 'jquery';
 import 'bootstrap';
+import 'popper.js';
 const { client_id, client_secret } = require('./config.json');
 const UiProfile = require('./ui-user-profile.js');
 
