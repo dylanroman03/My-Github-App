@@ -5,7 +5,7 @@ export function ajaxGet(url, callback){
 		if(req.status >= 200 && req.status < 400){
 			var reply = JSON.parse(req.responseText);
 			//return reply;
-			callback(reply)	
+			callback(reply);	
 		}else {
 			//Error de Servidor
 			document.write(req.status + " " + req.statusText)
