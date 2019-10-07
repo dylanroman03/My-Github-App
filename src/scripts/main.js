@@ -4,7 +4,8 @@ import 'bootstrap';
 import 'popper.js';
 const { client_id, client_secret } = require('./config.json');
 const UiProfile = require('./ui-user-profile.js');
-
+const UiErrorServer = require('./ui-server-connection.js');
+const uiErrorServer = new UiErrorServer();
 const ui = new UiProfile();	 
  
 var exploreFormElt = document.getElementById("exploreForm");
@@ -18,11 +19,11 @@ exploreFormElt.addEventListener("submit", (e) => {
 	if(nameUser !== "") {
 		var url = `https://api.github.com/users/` + nameUser + `?client_id=${client_id}&client_secret=${client_secret}` 
 		ajaxGet(url, (user) => {
-			ui.viewProfile(user)
-			console.log(user);
-		});
+			ui.viewProfile(user);
+			console.log();
+		})
 	}else {
-		console.error("User not avalible");
+		uiErrorServer.Mensaje()
 	}
 });
 
