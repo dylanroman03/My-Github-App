@@ -1,24 +1,35 @@
-export function ajaxGet(url, recibido){
-	var req = new XMLHttpRequest();
-	req.open("GET", url, true);
-	req.addEventListener("load", function(){
-		if(req.readyState == 3){
-			console.log("hola")
-		}
-		if(req.status >= 200 && req.status < 400){
-			var reply = JSON.parse(req.responseText);
-			//return reply;
-			recibido(reply);	
-		}else {
-			//Error de Servidor
-			document.write(req.status + " " + req.statusText)
-		}
-	});
+class AjaxGet {
+	constructor(){}
 	
-	//Error de Red
-	req.addEventListener("error", function(){
-		document.write("Error de Red")
-	});
+	calling(url, callback){
+		var req = new XMLHttpRequest();
+		req.open("GET", url, true);
+		req.addEventListener("load", () => {
+			if(req.status >= 200 && req.status < 400){
+				var reply = JSON.parse(req.responseText);
+				//return reply;
+				callback(reply);	
+			}else {
+				//Error de Servidor
+				document.write(req.status + " " + req.statusText)
+			}
+		});
+	
+		//Error de Red
+		req.addEventListener("error", () => document.write("Error de Red"));
 
-	req.send(null);
-}
+		req.send(null);
+	}
+};
+
+module.exports = AjaxGet;
+
+
+
+
+
+
+
+
+
+
