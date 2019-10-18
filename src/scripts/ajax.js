@@ -1,9 +1,10 @@
 class AjaxGet {
 	constructor(){}
 	
-	calling(url, callback){
+	calling(url, headers, callback){
 		var req = new XMLHttpRequest();
 		req.open("GET", url, true);
+		req.setRequestHeader('Accept', headers)
 		req.addEventListener("load", () => {
 			if(req.status >= 200 && req.status < 400){
 				var reply = JSON.parse(req.responseText);

@@ -1,3 +1,9 @@
+const FetchApi = require('./fetch.js');
+const fetchApi = new FetchApi();
+//AjaxGet
+const AjaxGet = require('./ajax.js');
+const ajaxGet = new AjaxGet();
+
 class UiProfile {
 	constructor() {
 		this.profileElt = document.getElementById("information");
@@ -138,7 +144,16 @@ class UiProfile {
                         `
                        	document.getElementById("infoDiv").appendChild(divElt);
 		}	
-		
+		//Projects
+		function callProjects(){
+			let url =	`https://api.github.com/users/${user.login}/projects`;
+			let headers = 'application/vnd.github.inertia-preview+json';
+			ajaxGet.calling(url, headers, (data) => {
+				console.log(data);
+    		});
+		}
+
+		callProjects();
 		//Buttons Repos, Following, Following
 		const buttonsInfoDivElt = document.createElement("div");
 		buttonsInfoDivElt.classList.add("row");

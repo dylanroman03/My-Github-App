@@ -1,9 +1,9 @@
-//AjaxGet
-const AjaxGet = require('./ajax.js');
-const ajaxGet = new AjaxGet();
 //UiProfile
 const UiProfile = require('./ui-user-profile.js');
 const uiProfile = new UiProfile();
+//FetchApi
+const FetchApi = require('./fetch.js');
+const fetchApi = new FetchApi();
 
 class UiList {
 	constructor(){}	
@@ -40,7 +40,7 @@ class UiList {
 				let userNumber = e.target.id;
 				let user = users.items[userNumber];
 				let url =	`https://api.github.com/users/${user.login}`;
-				ajaxGet.calling(url, (user) => {
+				fetchApi.calling(url, (user) => {
 					uiProfile.viewProfile(user);
 					console.log(user);
     		});
