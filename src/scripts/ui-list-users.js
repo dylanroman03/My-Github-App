@@ -43,7 +43,7 @@ class UiList {
 				fetchApi.calling(url, (user) => {
 					uiProfile.viewProfile(user);
 					console.log(user);
-    		});
+    				});
 			}
 		});
 	}  	

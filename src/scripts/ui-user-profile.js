@@ -1,8 +1,11 @@
 const FetchApi = require('./fetch.js');
 const fetchApi = new FetchApi();
-//AjaxGet
+//AJAXGET
 const AjaxGet = require('./ajax.js');
 const ajaxGet = new AjaxGet();
+//UI REPOS
+const UiRepos = require('./ui-repos');
+const uiRepos = new UiRepos();
 
 class UiProfile {
 	constructor() {
@@ -144,27 +147,18 @@ class UiProfile {
                         `
                        	document.getElementById("infoDiv").appendChild(divElt);
 		}	
-		//Projects
-		function callProjects(){
-			let url =	`https://api.github.com/users/${user.login}/projects`;
-			let headers = 'application/vnd.github.inertia-preview+json';
-			ajaxGet.calling(url, headers, (data) => {
-				console.log(data);
-    		});
-		}
 
-		callProjects();
 		//Buttons Repos, Following, Following
 		const buttonsInfoDivElt = document.createElement("div");
 		buttonsInfoDivElt.classList.add("row");
 		buttonsInfoDivElt.innerHTML = `
                 	<div class="col">
-				<div class="btn-group">
+				<div class="btn-group" id="btnRepos">
 					<button class="btn btn-outline-secondary">
 						<svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill-rule="evenodd" d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z"/></svg>
 
 					</button>
-					<button class="btn btn-secondary">${user.public_repos}</button>
+					<button class="btn btn-secondary" id="btnRepos">${user.public_repos}</button>
 				</div>
 			</div> 	
 			<div class="col">
@@ -176,10 +170,41 @@ class UiProfile {
 				</div>
 			</div>
 		`;
-		document.getElementById("infoDiv").appendChild(buttonsInfoDivElt);
+
+		//Projects
+		async function callProjects(){
+			let url =	`https://api.github.com/users/${user.login}/projects`;
+			let headers = 'application/vnd.github.inertia-preview+json';
+			await ajaxGet.calling(url, headers, (data) => {
+				var projectsUser = data;
+				buttonsInfoDivElt.innerHTML += `
+				<div class="col">
+					<div class="btn-group">
+						<button class="btn btn-outline-secondary">
+							<svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16"><path fill-rule="evenodd" d="M10 12h3V2h-3v10zm-4-2h3V2H6v8zm-4 4h3V2H2v12zm-1 1h13V1H1v14zM14 0H1a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1z"/></svg>
+						</button>
+						<button class="btn btn-secondary" id="btnProjects">${projectsUser.length}</button>
+					</div>
+				</div>	
+				`
+    			document.getElementById("infoDiv").appendChild(buttonsInfoDivElt);
+    		})		
+		}
+		
+		callProjects();
+		
+		this.profileElt.addEventListener("click", function(e){
+			if(e.target.id === "btnRepos"){
+				let url = user.repos_url;
+				fetchApi.calling(url, (repos)=>{
+					console.log(repos);
+					uiRepos.viewRepos(repos);
+				})
+			}
+		})
 	}
 }
-
+	
 module.exports = UiProfile;
 
 
